@@ -20,9 +20,11 @@ import { workoutNotices } from "./components/workoutNotices.js";
 import { getWeekPlan } from "./components/getWeekPlan.js";
 import { workoutPlan5km } from "./workoutPlanCreator/5kmFirstLevel.js";
 import { viewWeekPlan } from "./components/viewWeekPlan.js";
+import { getZones } from "./workoutPlanCreator/getZones.js";
+import { botToken } from "./botToken.js";
 
 
-const token = '6188444985:AAFtpsbmhdcVY_MmbbRCZT7bEk5OJJnF4ac';
+const token = botToken;
 
 const bot = new TelegramBot(token, {
     polling: {
@@ -62,6 +64,10 @@ export const App = async (state) => {
                     if (text === '/editprofile') {
                         setState({ id: chatId, place: 'editprofile' }, state);
                         await editProfile(bot, msg);
+                    }
+                    if (text === '/myzones') {
+                        const zonesMessageText = await getZones(msg);
+                        bot.sendMessage(chatId, zonesMessageText, {parse_mode: "HTML"})
                     }
                     if (text === '/weekplan') {
                         const weekPlan = await getWeekPlan(chatId, workoutPlan5km);

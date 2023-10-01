@@ -21,6 +21,10 @@ export const commands = [
         command: 'editprofile',
         description: 'Обновить данные профиля'
     },
+    {
+        command: 'myzones',
+        description: 'Посмотреть тренировочные зоны'
+    },
     /*{
         command: 'editworkoutplan',
         description: 'Изменить тренировочный план'

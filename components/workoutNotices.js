@@ -52,7 +52,7 @@ const sendNotices = async (bot, userGroup, startTimeout) => {
 }
 */
 const messageDelay = 1000;
-const startNoticesHours = 17;
+const startNoticesHours = 19;
 const quantityWorkots = 63;
 
 const sendNotices2 = (bot, timeZone, rule) => {
@@ -75,12 +75,18 @@ const sendNotices2 = (bot, timeZone, rule) => {
                 const birthYear = user.profile.birth;
                 const maxHRR = 220 - (currentDate.getFullYear() - birthYear);
                 const workout = getAdaptedWorkout(level, maxHRR, workoutPlan5km[workoutIndex + 1])
-                const workoutText ='Привет! Твоя тренировка на завтра:\n' + getWorkoutView(workout);
+                const workoutText = 
+                '<b>Твоя тренировка на завтра:</b>\n' + 
+                '\n' + 
+                getWorkoutView(workout) +
+                '\n' +
+                '/myzones - посмотреть тренировочные зоны';
                 //console.log(workoutIndex + 'INDEX')
-                bot.sendMessage(chatId, workoutText)
+                bot.sendMessage(chatId, workoutText, {parse_mode: 'HTML'})
             }
             setTimeout(() => {}, messageDelay)
         })
+        console.log(timeZone)
     })
 }
 
@@ -102,19 +108,22 @@ export const workoutNotices = async (bot) => {
 
     const rule1 = new schedule.RecurrenceRule();
     rule1.hour = startNoticesHours;
-    //rule1.minute = 51
+    rule1.minute = 10
     sendNotices2(bot, 0, rule1)
     
     const rule2 = new schedule.RecurrenceRule();
-    rule2.hour = startNoticesHours + 6;
-    //sendNotices2(bot, 6, rule1)
+    rule2.hour = startNoticesHours + 18;
+    rule2.minute = 13
+    sendNotices2(bot, 6, rule2)
 
     const rule3 = new schedule.RecurrenceRule();
     rule3.hour = startNoticesHours + 12;
-    //sendNotices2(bot, 12, rule1);
+    rule3.minute = 16
+    sendNotices2(bot, 12, rule3);
 
     const rule4 = new schedule.RecurrenceRule();
-    rule4.hour = startNoticesHours + 18;
-    //sendNotices2(bot, 18, rule1)
+    rule4.hour = startNoticesHours + 6;
+    rule4.minute = 20
+    sendNotices2(bot, 18, rule4)
     
 }

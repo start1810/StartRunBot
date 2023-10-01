@@ -16,12 +16,20 @@ export const getWorkoutView = (workout) => {
         const time = secToMin(part.time);
         const tempo = part.tempo.map(elem => secToMin(elem));
         
-        if (part.repeat) {
+        /*if (part.repeat) {
             textOfTitle += `${part.repeat} раза по ${time} мин в зоне ${part.zone} (Темп: ${tempo[1]}-${tempo[0]} мин/км) через ` 
         } else if (!part.tempo[0]) {
             textOfTitle += `${time} минут в зоне ${part.zone}:(Темп: до ${tempo[1]} мин/км, пульс: ${part.HRR})` + '\n'
         } else {
             textOfTitle += `${time} минут в зоне ${part.zone}:(Темп:  ${tempo[1]}-${tempo[0]} мин/км, пульс: ${part.HRR})` + '\n'
+        }*/
+
+        if (part.repeat) {
+            textOfTitle += `<i>${part.repeat} раза по ${time} мин</i> в <b>зоне ${part.zone}</b> через ` 
+        } else if (!part.tempo[0]) {
+            textOfTitle += `<i>${time} минут</i> в <b>зоне ${part.zone}</b>` + '\n'
+        } else {
+            textOfTitle += `<i>${time} минут</i> в <b>зоне ${part.zone}</b>` + '\n'
         }
     })
     const feelings = [
@@ -33,7 +41,7 @@ export const getWorkoutView = (workout) => {
     ]
     const workoutView = 
     `${workout.name}` + '\n' +
-    `Примерная дистанция - ${workout.distance}км` + '\n' +
+    `<i>Примерная дистанция - ${workout.distance}км</i>` + '\n' +
     `Содержание:` + '\n' +
     `${textOfTitle}` 
 
