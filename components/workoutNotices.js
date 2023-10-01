@@ -107,14 +107,14 @@ export const workoutNotices = async (bot) => {
     
     const rule2 = new schedule.RecurrenceRule();
     rule2.hour = startNoticesHours + 6;
-    sendNotices2(bot, 6, rule1)
+    //sendNotices2(bot, 6, rule1)
 
     const rule3 = new schedule.RecurrenceRule();
     rule3.hour = startNoticesHours + 12;
-    sendNotices2(bot, 12, rule1);
+    //sendNotices2(bot, 12, rule1);
 
     const rule4 = new schedule.RecurrenceRule();
     rule4.hour = startNoticesHours + 18;
-    sendNotices2(bot, 18, rule1)
+    //sendNotices2(bot, 18, rule1)
     
 }
