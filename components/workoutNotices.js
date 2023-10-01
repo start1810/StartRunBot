@@ -52,7 +52,7 @@ const sendNotices = async (bot, userGroup, startTimeout) => {
 }
 */
 const messageDelay = 1000;
-const startNoticesHours = 12;
+const startNoticesHours = 19;
 const quantityWorkots = 63;
 
 const sendNotices2 = (bot, timeZone, rule) => {
