@@ -47,7 +47,8 @@ export const chooseDayStart = async (bot, ctx) => {
     //await setWorkoutWeek(chatId, [])
     
     const textMessage = 'План создан! Твоя первая тренировка будет ' + day + ' ' + textMonth[monthInd] + ' ' + year + ' года' +
-    '\n\nОписание тренировки:\n' + workoutText;
+    '\n\nОписание тренировки:\n' + workoutText + '\n' +
+    '/myzones - посмотреть тренировочные зоны';
     await bot.deleteMessage(chatId, ctx.message.message_id)
     await bot.sendMessage(chatId, textMessage, {parse_mode: 'HTML'});
     
