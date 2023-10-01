@@ -49,7 +49,7 @@ export const chooseDayStart = async (bot, ctx) => {
     const textMessage = 'План создан! Твоя первая тренировка будет ' + day + ' ' + textMonth[monthInd] + ' ' + year + ' года' +
     '\n\nОписание тренировки:\n' + workoutText;
     await bot.deleteMessage(chatId, ctx.message.message_id)
-    await bot.sendMessage(chatId, textMessage);
+    await bot.sendMessage(chatId, textMessage, {parse_mode: 'HTML'});
     
     //Вытащить дату и месяц из строк и сохранить
 }
