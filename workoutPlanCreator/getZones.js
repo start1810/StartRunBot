@@ -1,6 +1,7 @@
 import { getDB } from "../dbApi/dbMethods.js";
 import { countHRRzones } from "./countHRRzones.js";
 import { getTempo } from "./getTempo.js";
+import { secToMin } from "./workoutView.js";
 
 export const getZones = async (msg) => {
     const userId = msg.chat.id
@@ -12,11 +13,11 @@ export const getZones = async (msg) => {
     const hrrZones = age ? countHRRzones(age) : 'Не могу рассчитать ваши пульсовые зоны, заполните данные своего профиля'
 
     const tempoZones = level !== null ? [
-        getTempo(level, 'recovery'),
-        getTempo(level, 'aerobic'),
-        getTempo(level, 'threshold'),
-        getTempo(level, 'interval'),
-        getTempo(level, 'repeat'),
+        secToMin(getTempo(level, 'recovery')),
+        secToMin(getTempo(level, 'aerobic')),
+        secToMin(getTempo(level, 'threshold')),
+        secToMin(getTempo(level, 'interval')),
+        secToMin(getTempo(level, 'repeat')),
     ] : 'Не могу рассчитать ваши зоны темпа, заполните данные профиля'
 
     const feelingsZones = [
@@ -28,26 +29,28 @@ export const getZones = async (msg) => {
     ]
 
     const messageText = 
+    '<b>Ваши тренировочные зоны</b> \n' +
     '<b>Зона 1(восстановительная):</b> \n' +
     '- <i>Пульс:</i> ' +  '<b>до ' + hrrZones[0] + 'уд/мин</b>' + ';\n' +
-    '- <i>Темп:</i> ' + '<b>' + tempoZones[0] + 'мин/км</b>' + ';\n' +
+    '- <i>Темп:</i> ' + '<b>до ' + tempoZones[0] + 'мин/км</b>' + ';\n' +
     '- <i>Ощущения:</i>' + '<b>' + feelingsZones[0] + '</b>,\n\n' +
-    '<b>Зона 2:</b> \n' +
+    '<b>Зона 2(базовая):</b> \n' +
     '- <i>Пульс:</i> ' +  '<b>' + hrrZones[0] + '-' + hrrZones[1] + 'уд/мин</b>' + ';\n' +
-    '- <i>Темп:</i> ' + '<b>' + tempoZones[1] + 'мин/км</b>' + ';\n' +
+    '- <i>Темп:</i> ' + '<b>' + tempoZones[0] + '-' + tempoZones[1] + 'мин/км</b>' + ';\n' +
     '- <i>Ощущения:</i>' + '<b>' + feelingsZones[1] + '</b>,\n\n' +
-    '<b>Зона 3:</b> \n' +
+    '<b>Зона 3(темповая):</b> \n' +
     '- <i>Пульс:</i> ' +  '<b>' + hrrZones[1] + '-' + hrrZones[2] + 'уд/мин</b>' + ';\n' +
-    '- <i>Темп:</i> ' + '<b>' + tempoZones[2] + 'мин/км</b>' + ';\n' +
+    '- <i>Темп:</i> ' + '<b>' + tempoZones[1] + '-' + tempoZones[2] + 'мин/км</b>' + ';\n' +
     '- <i>Ощущения:</i>' + '<b>' + feelingsZones[2] + '</b>,\n\n' +
-    '<b>Зона 4:</b> \n' +
+    '<b>Зона 4(пороговая):</b> \n' +
     '- <i>Пульс:</i> ' +  '<b>' + hrrZones[2] + '-' + hrrZones[3] + 'уд/мин</b>' + ';\n' +
-    '- <i>Темп:</i> ' + '<b>' + tempoZones[3] + 'мин/км</b>' + ';\n' +
+    '- <i>Темп:</i> ' + '<b>' + tempoZones[2] + '-' + tempoZones[3] + 'мин/км</b>' + ';\n' +
     '- <i>Ощущения:</i>' + '<b>' + feelingsZones[3] + '</b>,\n\n' +
-    '<b>Зона 5:</b> \n' +
+    '<b>Зона 5(зона МПК):</b> \n' +
     '- <i>Пульс:</i> ' +  '<b>' + hrrZones[3] + '-' + hrrZones[4] + 'уд/мин</b>' + ';\n' +
-    '- <i>Темп:</i> ' + '<b>' + tempoZones[4] + 'мин/км</b>' + ';\n' +
-    '- <i>Ощущения:</i>' + '<b>' + feelingsZones[4] + '</b>.\n\n';
+    '- <i>Темп:</i> ' + '<b>' + tempoZones[3] + '-' + tempoZones[4] + 'мин/км</b>' + ';\n' +
+    '- <i>Ощущения:</i>' + '<b>' + feelingsZones[4] + '</b>.\n\n' + 
+    '/editprofile - коррекция данных для обновления тренировочных зон'
 
     return messageText;
     //bot.sendMessage(userId, messageText, {parse_mode: 'HTML'})

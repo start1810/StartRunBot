@@ -4,11 +4,11 @@ export const getWorkout = (type, number, level) => {
     const workout = {}
     switch (type) {
         case 'base' :
-            workout.name = 'Базовая тренировка';
+            workout.name = '<a href="https://t.me/startrunner/98">Базовая тренировка</a>';
             workout.title = base.workouts[number];
             break
         case 'recovery' :
-            workout.name = 'Восстановительная тренировка';
+            workout.name = '<a href="https://t.me/startrunner/98">Восстановительная тренировка</a>';
             workout.title = recovery.workouts[number];
             break
         case 'fartlek' :

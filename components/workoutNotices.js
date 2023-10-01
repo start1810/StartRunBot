@@ -52,7 +52,7 @@ const sendNotices = async (bot, userGroup, startTimeout) => {
 }
 */
 const messageDelay = 1000;
-const startNoticesHours = 19;
+const startNoticesHours = 12;
 const quantityWorkots = 63;
 
 const sendNotices2 = (bot, timeZone, rule) => {
@@ -108,7 +108,7 @@ export const workoutNotices = async (bot) => {
 
     const rule1 = new schedule.RecurrenceRule();
     rule1.hour = startNoticesHours;
-    rule1.minute = 10
+    rule1.minute = 3
     sendNotices2(bot, 0, rule1)
     
     const rule2 = new schedule.RecurrenceRule();

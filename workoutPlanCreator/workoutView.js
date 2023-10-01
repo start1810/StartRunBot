@@ -2,7 +2,7 @@ import { intervalPeriod, basePeriod } from "./5kmFirstLevel.js";
 import { getAdaptedWorkout } from "./getAdaptedWorkout.js";
 import { repeat } from "./workoutTasks.js";
 
-const secToMin = (time) => {
+export const secToMin = (time) => {
     const min = Math.floor(time / 60);
     const sec = `${time % 60}`.length === 1 ? `0${time % 60}` : `${time % 60}`
     return sec === '00' ? `${min}`: `${min}.${sec}`;

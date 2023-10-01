@@ -22,6 +22,7 @@ import { workoutPlan5km } from "./workoutPlanCreator/5kmFirstLevel.js";
 import { viewWeekPlan } from "./components/viewWeekPlan.js";
 import { getZones } from "./workoutPlanCreator/getZones.js";
 import { botToken } from "./botToken.js";
+import { adminData } from "./components/adminPannel.js";
 
 
 const token = botToken;
@@ -32,6 +33,8 @@ const bot = new TelegramBot(token, {
         autoStart: true
     }
 });
+
+const botAdmins = [400233058]
 
 export const App = async (state) => {
     console.log('bot is work')
@@ -74,6 +77,12 @@ export const App = async (state) => {
                         viewWeekPlan(bot, msg, weekPlan);
                     }
 
+                    if ((text === '/admin') && (botAdmins.includes(chatId))) {
+                        const data = await adminData();
+                        console.log(data)
+                        await bot.sendMessage(chatId, data);
+                    }
+
                     if (userState.place === 'editbirth') {
                         await editBirthMessage(bot, msg);
                         setState({ id: chatId, place: 'textState' }, state);
@@ -90,7 +99,7 @@ export const App = async (state) => {
         }
         catch(error) {
             console.log(error)
-            const errorText = 'Упс, что-то пошло не так! Можете перезапустить бота или написать Артему'
+            const errorText = 'Упс, что-то пошло не так! Можете перезапустить бота или написать @striganovartem'
             bot.sendMessage(chatId, errorText)
             console.log('ошибка')
         }
