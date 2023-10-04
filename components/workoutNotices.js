@@ -52,13 +52,17 @@ const sendNotices = async (bot, userGroup, startTimeout) => {
 }
 */
 const messageDelay = 1000;
-const startNoticesHours = 19;
+const startNoticesHours = 20;
 const quantityWorkots = 63;
 
-const sendNotices2 = (bot, timeZone, rule) => {
-    schedule.scheduleJob(rule, async () => {
+const sendNotices2 = (bot, timeZone) => {
+    const sendTime = startNoticesHours - timeZone < 0 ? startNoticesHours - timeZone + 24 : startNoticesHours - timeZone
+    const timeStart = `21 ${sendTime} * * *`
+    //const timeStart = `${29 - timeZone} 47 * * *`
+    schedule.scheduleJob(timeStart, async () => {
         const users = await getDB();
-        const userGroup = users.filter(user => (user.profile.timeZone >= timeZone) && (user.profile.timeZone < timeZone + 6));
+        const userGroup = users.filter(user => (+user.profile.timeZone === timeZone));
+        console.log(userGroup)
         const currentTime = new Date();
         const currentDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate());
         //console.log(currentDate.getTime() + 'THIS TIME')
@@ -66,8 +70,8 @@ const sendNotices2 = (bot, timeZone, rule) => {
         userGroup.map((user) => {
             const startDate = user.profile.startDate;
             const workoutIndex = (currentDate - startDate) / 1000 / 60 / 60 / 24;
-            console.log(user)
-            console.log(workoutIndex)
+            //console.log(user)
+            //console.log(workoutIndex)
 
             if (workoutIndex >= 0 && workoutIndex < quantityWorkots) {
                 const chatId = user.profile.userId;
@@ -82,11 +86,16 @@ const sendNotices2 = (bot, timeZone, rule) => {
                 '\n' +
                 '/myzones - посмотреть тренировочные зоны';
                 //console.log(workoutIndex + 'INDEX')
-                bot.sendMessage(chatId, workoutText, {parse_mode: 'HTML'})
+                try {
+                    bot.sendMessage(chatId, workoutText, {parse_mode: 'HTML'})
+                }
+                catch {
+                    console.log('сообщение не отправилось')
+                }
             }
             setTimeout(() => {}, messageDelay)
         })
-        console.log(timeZone)
+        console.log('Уведомления для временной зоны ' + timeZone)
     })
 }
 
@@ -97,33 +106,11 @@ export const workoutNotices = async (bot) => {
     //const secondGroup = users.filter(user => (user.profile.timeZone >= 6) && (user.profile.timeZone < 12));
     //const thirdGroup = users.filter(user => (user.profile.timeZone >= 12) && (user.profile.timeZone < 18));
     //const fourthGroup = users.filter(user => (user.profile.timeZone >= 18) && (user.profile.timeZone < 24));
-   
-    
-
     console.log("Уведомление придет в " + startNoticesHours);
-
     //const testRule = new schedule.RecurrenceRule();
     //testRule.second = startNoticesHours;
     //sendNotices2(bot, 0, testRule)
-
-    const rule1 = new schedule.RecurrenceRule();
-    rule1.hour = startNoticesHours;
-    rule1.minute = 3
-    sendNotices2(bot, 0, rule1)
-    
-    const rule2 = new schedule.RecurrenceRule();
-    rule2.hour = startNoticesHours + 18;
-    rule2.minute = 13
-    sendNotices2(bot, 6, rule2)
-
-    const rule3 = new schedule.RecurrenceRule();
-    rule3.hour = startNoticesHours + 12;
-    rule3.minute = 16
-    sendNotices2(bot, 12, rule3);
-
-    const rule4 = new schedule.RecurrenceRule();
-    rule4.hour = startNoticesHours + 6;
-    rule4.minute = 20
-    sendNotices2(bot, 18, rule4)
-    
+    for (let timeZone = 0; timeZone < 24; timeZone ++) {
+    sendNotices2(bot, timeZone)
+    } 
 }

@@ -60,7 +60,7 @@ export const App = async (state) => {
                 await sendStartMessage(bot, msg)
             } else {
                 const subscribe = await checkSubscribeMsg(bot, msg);
-                console.log(subscribe)
+                //console.log(subscribe)
                 if (subscribe.status === 'left' || subscribe.status === 'kicked') {
                     await sendSubscribeMessage(bot, msg);
                 } else {
@@ -117,8 +117,8 @@ export const App = async (state) => {
 
         try {
             const subscribe = await checkSubscribeCtx(bot, msg);
-            console.log(subscribe)
-            console.log(msg)
+            //console.log(subscribe)
+            //console.log(msg)
             if (subscribe.status === 'left' || subscribe.status === 'kicked') {
                 await sendSubscribeMessage(bot, msg);
             } else {

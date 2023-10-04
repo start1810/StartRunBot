@@ -40,7 +40,8 @@ export const editLevelMessage = async (bot, msg, distance) => {
     if (validateTime(bestTime)) {
         const [hours, minutes, seconds] = bestTime.split(':');
         const bestTimeSec = (+hours * 3600) + (+minutes * 60) + (+seconds);
-        const level = countLevel(distance, bestTimeSec)
+        const level = countLevel(distance, bestTimeSec) < 30? 30 : countLevel(distance,bestTimeSec);
+        //console.log(level);
         const userInfo = await getProfileInfo(chatId);
             userInfo.profile.level = level;
             const tempos = [
